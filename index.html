@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Softphone</title>
+        <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+        <link rel="shortcut icon" href="images/favicon.png">
+        <meta charset="utf-8">
+        <link href="css/bootstrap.min.css" rel="stylesheet" />
+        <link href="css/bootstrap-theme.min.css" rel="stylesheet" />
+        <link href="css/app.css" rel="stylesheet" />
+        <script type="text/javascript" src="js/lib/jquery-3.2.1.min.js"></script>
+
+
+
+		<script src="https://static.stringee.com/web_phone/lastest/js/StringeeSoftPhone-lastest.js"></script>
+
+		<script type="text/javascript" src="js/lib/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/app-1.8.js"></script>
+
+    </head>
+
+    <body>
+        <div id="wrapNotify">
+        </div>
+        <div id="page-loading">
+            <div class="wrap-icon">
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" id="Layer_1" x="0px" y="0px" viewBox="0 0 38 38">
+                <style type="text/css">
+                    .st0{fill:none;stroke:#D1D1D1;stroke-width:1;}
+                    .st1{fill:none;stroke:#2bb207;stroke-width:1;transform-origin:18px 18px;}
+                    .st2{fill:none;stroke:#434a5c;stroke-width:1;transform-origin:18px 18px;}
+                </style>
+                <g transform="translate(1 1)">
+                <circle class="st0" cx="18" cy="18" r="18"></circle>
+                <path class="st1" d="M36,18c0-9.9-8.1-18-18-18"></path>
+                <path class="st2" d="M18,36c9.9,0,18-8.1,18-18"></path>
+                </g>
+                </svg>
+            </div>
+        </div>
+        <div class="page-wrapper">
+            <section id="page-login">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-lg-offset-4 col-md-offset-4 col-sm-offset-4 mt-100">
+                    <div class="text-center mb-10"><img src="images/logo.png"/></div>
+                    <br>
+                    <div class="showMsg">
+                    </div>
+                    <div id="step1">
+                        <div class="input-group phone-input mb-10">
+                            <span class="input-group-btn input-group-lg">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <span class="type-text select-flag"><img src="images/vn.png" ></span> 
+                                    <!--<span class="caret"></span>-->
+                                </button>
+                                <!--                                <ul class="dropdown-menu" role="menu">
+                                                                    <li><a class="changeType" href="javascript:;" data-type-value="phone">+84</a></li>
+                                                                </ul>-->
+                            </span>
+                            <!--<input type="hidden" name="phone[1][type]" class="type-input" value="">-->
+                            <input type="text" name="phone[1][number]" class="form-control" id="phone" placeholder="0999999999">
+                        </div>
+
+                        <button class="btn btn-success btn-block btn-lg" id="btnLogin">Login</button>
+                    </div>
+                    <div id="step2" class="hide">
+                        <div class="form-group">
+                            <p class="text-center">We've sent an SMS with an activation code to your phone.<br>
+                                Please enter the code below.</p>
+                            <input type="text" class="form-control" id="code">
+                        </div>
+                        <button class="btn btn-success btn-block btn-lg" id="btnConfirmCode">Next</button>
+                    </div>
+                </div>
+            </section>
+            <section id="page-call" class="hide bg-video-call">
+                <div class="wrap-header-container flex">
+                    <div class="logo-wrapper">
+                        <img src="images/logo.png" />
+                    </div>
+                    <div class="logged">
+                        <span class="wrap-free-call">Free money to callout: <span class="wrap_money"><span id="money"></span>$</span></span>
+                        <div class="wrap-phone-logged">
+                            <img src="images/user.svg" />
+                            <span class="mr-10" id="phoneLogged"></span>
+                        </div>
+                        <button id="btnOpenLogout">
+                            <img src="images/power-button.svg" >
+                            Logout
+                        </button>
+                    </div>
+                </div>
+
+
+                <div id='wrap-main-container'>
+                    <div id="wrap-mobile-phone" class="flex-item">
+
+                    </div>
+                    <div class="wrap-video-container">
+                        <div class="wrap-video">
+                            <div class="video wrapLocalVideo">
+                                <video id="localVideo" class="flex-item" playsinline autoplay muted></video>
+                                <div class="icon_voice hide"><img src="images/user.svg" /></div>
+                            </div>
+                            <div class="video wrapRemoteVideo">
+                                <video id="remoteVideo" class="flex-item" playsinline autoplay></video>
+                                <div class="icon_voice hide"><img src="images/user.svg" /></div>
+                            </div>
+                        </div>
+                        <div class="wrap-incall-container toolBarInCall hide">
+                            <br>
+                            <div class="wrap-toolbar">
+                                <div class="btn-group">
+                                    <button type="button" id="btnTime" class="btn btn-primary" style="color: #fff;font-size: 20px;">
+                                        <span class="countTime"></span>
+                                    </button>
+                                    <button type="button" id="btnMicOnOff" class="btn btn-primary">
+                                        <span class="off hide"><img src="images/icon-slash.svg" /></span>
+                                        <img src="images/icon-mic.svg" />
+                                        <span class='icon-text'>Mic off</span>
+                                    </button>
+                                    <button type="button" id="btnCamOnOff" class="btn btn-primary">
+                                        <span class="off hide"><img src="images/icon-slash.svg" /></span>
+                                        <img src="images/icon-camera.svg" />
+                                        <span class='icon-text'>Cam off</span>
+                                    </button>
+                                    <button type="button" id="btnHangup" class="btn btn-primary">
+                                        <img src="images/end-call-button-red.svg" />
+                                        <span class='icon-text'>Hangup</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <section id="page-incommingcall" class="hide page-overlay">
+                <div class="wrap-icon">
+                    <div class="wrap_text_comming">
+                        <h2 class="h2_phone_comming"></h2>
+                        <h3>Comming call...</h3>
+                    </div>
+                    <button class="btn btn-danger btn-circle btn-lg" id="btnRejectCall">
+                        <img src="images/end-call-button.svg" />
+                        <span class="text-btn">
+                            <h3>Decline</h3>
+                        </span>
+                    </button>
+                    <button class="btn btn-success btn-circle btn-lg" id="btnAnswerCall">
+                        <img src="images/call-answer.svg" />
+                        <span class="text-btn">
+                            <h3>Accept</h3>
+                        </span>
+                    </button>
+                </div>
+            </section>
+
+            <section class="page-overlay hide" id="page-calling">
+                <div class="wrap-icon">
+                    <div class="wrap_text_comming">
+                        <h2 class="h2_phone_calling"></h2>
+                        <h3>Calling...</h3>
+                    </div>
+                    <button class="btn btn-danger btn-circle btn-lg" id="btnEndCall">
+                        <img src="images/end-call-button.svg" />
+                    </button>
+                </div>
+            </section>
+
+            <section class="page-overlay hide" id="page-requestcamera">
+                <div class="wrap-icon">
+                    <div class="wrap_text_comming">
+                        <h2 class="h2_phone_comming"></h2>
+                        <h3>want share video...</h3>
+                    </div>
+                    <button class="btn btn-danger btn-circle btn-lg" id="btnRejectRequest">
+                        <img src="images/video-camera-slash.svg" />
+                    </button>
+                    <button class="btn btn-success btn-circle btn-lg" id="btnAnswerRequest">
+                        <img src="images/video-camera.svg" />
+                    </button>
+                </div>
+            </section>
+
+            <section class="page-overlay hide" id="page-selectcall">
+                <div class="wrap-select-call">
+                    <div class="close"><img src="images/close.svg" ></div>
+                    <div class="panel mb-10">
+                        <div class="wrap-group-call">
+                            <span class="span-title">APP TO APP <span class="text-success">(FREE CALL)</span></span>
+                            <div class="wrap-app-to-app">
+                                <div class="row">
+                                    <div class="wrap-btn col-xs-6">
+                                        <button type="button" class="btn btn-success btn-block button-success-border-white btnVoiceCall">
+                                            <img src="images/phone-call-button.svg" width="15" class="mr-5" /> VOICE CALL
+                                        </button>
+                                    </div>
+                                    <div class="wrap-btn col-xs-6">
+                                        <button type="button" class="btn btn-success btn-block button-success-border-white btnVideoCall">
+                                            <img src="images/facetime-button.svg" width="15" class="mr-5" /> VIDEO CALL
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel mb-10">
+                        <div class="panel-number-selector">
+                            <span class="span-title">APP TO PHONE</span>
+                        </div>
+                        <button class="btnCallOut btn btn-success btn-block border-none"><img src="images/phone-call-button.svg" width="15" class="mr-5" />CALL OUT</button>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+
+        <!-- Modal -->
+        <div id="modalConfirmLogout" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <h3>Do you want logout?</h3>
+                        <br>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-danger" id="btnLogout">Yes</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- End Modal -->
+
+        <!-- Modal -->
+        <div id="modalMsg" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-body p-30">
+                        <div class="wrap-message flex">
+                            <div class="message-icon mr-10">
+                                <img src="images/warning.svg" width="50" />
+                            </div>
+                            <div class="message-content">
+                                <h3 class="mt-0"></h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Modal -->
+
+
+		<script>
+			var config = {
+				showMode: 'none', //full | min | none
+				top: 75,
+				left: 20,
+				arrowLeft: 155,
+				arrowDisplay: 'top', //top | bottom | none
+				fromNumbers: [],
+				askCallTypeWhenMakeCall: true
+			};
+
+			StringeeSoftPhone.on('displayModeChange', function (event) {
+				console.log('displayModeChange', event);
+				if (event === 'min') {
+					StringeeSoftPhone.config({arrowLeft: 75});
+				} else if (event === 'full') {
+					StringeeSoftPhone.config({arrowLeft: 155});
+				}
+			});
+
+			StringeeSoftPhone.on('beforeMakeCall', function (call, callType) {
+				console.log('beforeMakeCall: ' + callType);
+//				if (callType === 'free-video-call') {
+//					call.video = true;
+//				}
+				if (callType === 'callout') {
+					call.custom = JSON.stringify({"app-to-phone": true});
+				} else {
+					call.custom = JSON.stringify({"app-to-phone": false});
+				}
+				return true;
+			});
+
+			//neu ko dung video call thi ham nay ko can
+			StringeeSoftPhone.on('addlocalstream', function (stream) {
+				//console.log('addlocalstream: ', stream);
+				localVideo.srcObject = null;
+				localVideo.srcObject = stream;
+			});
+
+			//neu ko dung video call thi ham nay ko can
+			//neu ham nay co thi bat buoc phai set vao remoteVideo cua document nay
+			StringeeSoftPhone.on('addremotestream', function (stream) {
+				//console.log('addremotestream: ', stream);
+				remoteVideo.srcObject = null;
+				remoteVideo.srcObject = stream;
+			});
+
+			StringeeSoftPhone.init(config);
+		</script>
+
+    </body>
+</html>
